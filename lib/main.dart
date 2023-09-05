@@ -31,9 +31,22 @@ class _QuizState extends State<Quiz> {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Quiz_app",
+      theme: ThemeData(
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(color: Colors.white),
+          bodySmall: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white)
+        )
+      ),
       home: Scaffold(
       backgroundColor: Colors.black,
-      body: screenWidget,
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+          Colors.black,
+          Colors.grey,
+        ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+        child: screenWidget),
      ),
     );
   }

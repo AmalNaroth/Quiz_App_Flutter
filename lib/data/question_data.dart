@@ -73,4 +73,13 @@ const questions = [
       "To update the app's dependencies."
     ],
   ),
+  QuizQuestions(
+    question: "Which package can be used for state management in Flutter to share data between widgets?",
+    answers: [
+      "provider",
+      "http",
+      "dio",
+      "firebase",
+    ],
+  ),
 ];

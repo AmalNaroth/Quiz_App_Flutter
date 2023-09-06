@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/data/question_data.dart';
 import 'package:quiz_app/question_screen.dart';
+import 'package:quiz_app/result_screen.dart';
 import 'package:quiz_app/start_screen.dart';
 
-void main(){
+void main() {
   runApp(const Quiz());
 }
 
@@ -14,40 +16,56 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  var activeScreen = "Start-screen";
-  
+   List<String> selectedAnswers = [];
 
-  void changeScreen(){
+  var activeScreen = "Start-screen";
+
+  void changeScreen() {
     setState(() {
       activeScreen = "Question-screen";
     });
   }
+
+  void chooseAnswers(String answer) {
+    selectedAnswers.add(answer);
+    if (selectedAnswers.length == questions.length) {
+      activeScreen = "Result-screen"; 
+    }
+    setState(() {});
+    print(selectedAnswers.join(" "));
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget screenWidget = StartScreen(changeScreen);
-    if(activeScreen=="Question-screen"){
-      screenWidget=const QuestionScreen();
+    if (activeScreen == "Question-screen") {
+      screenWidget = QuestionScreen(
+        onSelectAnswer: chooseAnswers,
+      );
     }
-    return  MaterialApp(
+     if(activeScreen=="Result-screen"){
+      screenWidget=ResultScreen(choosenAnswers: selectedAnswers,);
+      //selectedAnswers.clear();
+  }
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Quiz_app",
       theme: ThemeData(
-        textTheme: TextTheme(
-          bodyLarge: TextStyle(color: Colors.white),
-          bodySmall: TextStyle(color: Colors.white),
-          bodyMedium: TextStyle(color: Colors.white)
-        )
-      ),
+          textTheme: const TextTheme(
+              bodyLarge: TextStyle(color: Colors.white),
+              bodySmall: TextStyle(color: Colors.white),
+              bodyMedium: TextStyle(color: Colors.white))),
       home: Scaffold(
-      backgroundColor: Colors.black,
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-          Colors.black,
-          Colors.grey,
-        ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
-        child: screenWidget),
-     ),
+        backgroundColor: Colors.black,
+        body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Colors.black,
+                Colors.grey,
+              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            ),
+            child: screenWidget),
+      ),
     );
   }
 }
